@@ -1,49 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Meus Jogos</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #eee;
+      background: #f0f0f0;
       padding: 20px;
     }
     .game-list {
       display: flex;
-      gap: 20px;
       flex-wrap: wrap;
+      gap: 20px;
     }
     .game-item {
-      background: white;
-      border: 1px solid #ccc;
-      padding: 10px;
       width: 250px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
       text-align: center;
+      padding: 10px;
+      transition: transform 0.2s;
     }
-    iframe {
-      width: 240px;
-      height: 180px;
-      border: none;
+    .game-item:hover {
+      transform: scale(1.03);
+    }
+    .game-item img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    .game-title {
+      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <h1>Meus Jogos</h1>
   <div class="game-list">
+    
     <div class="game-item">
-      <h3>Ninja Game</h3>
-      <iframe src="https://gd.games/tedi_games_studios/ninja-game1" allowfullscreen></iframe>
+      <a href="https://gd.games/tedi_games_studios/ninja-game1" target="_blank">
+        <img src="imagens/ninja.jpg" alt="Ninja Game" />
+      </a>
+      <div class="game-title">Ninja Game</div>
     </div>
+
     <div class="game-item">
-      <h3>Incas The Game</h3>
-      <iframe src="https://gd.games/tedi_games_studios/incas-the-game" allowfullscreen></iframe>
+      <a href="https://gd.games/tedi_games_studios/incas-the-game" target="_blank">
+        <img src="imagens/incas.jpg" alt="Incas The Game" />
+      </a>
+      <div class="game-title">Incas The Game</div>
     </div>
+
     <div class="game-item">
-      <h3>Jumping Plane</h3>
-      <iframe src="https://gd.games/tedi_games_studios/jumping-plane-" allowfullscreen></iframe>
+      <a href="https://gd.games/tedi_games_studios/jumping-plane-" target="_blank">
+        <img src="imagens/plane.jpg" alt="Jumping Plane" />
+      </a>
+      <div class="game-title">Jumping Plane</div>
     </div>
+
   </div>
 </body>
 </html>
