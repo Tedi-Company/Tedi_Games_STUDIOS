@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jogos da Tedi Games</title>
   <style>
     * {
@@ -18,8 +17,12 @@
     }
 
     h1 {
-      margin-top: 0;
       color: #222;
+      font-size: 2.5em;
+      opacity: 0;
+      transform: scale(0.9);
+      animation: tituloZoom 0.8s ease forwards;
+      animation-delay: 0.2s;
     }
 
     #searchInput {
@@ -30,6 +33,10 @@
       margin-top: 20px;
       width: 80%;
       max-width: 400px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInput 0.8s ease forwards;
+      animation-delay: 0.6s;
     }
 
     .jogos {
@@ -51,12 +58,18 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
       border: 2px solid transparent;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: surgir 0.6s ease forwards;
     }
 
+    .jogo:nth-child(1) { animation-delay: 1.0s; }
+    .jogo:nth-child(2) { animation-delay: 1.2s; }
+    .jogo:nth-child(3) { animation-delay: 1.4s; }
+
     .jogo:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-      border: 2px solid #ffbf00;
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
     }
 
     .jogo img {
@@ -69,6 +82,27 @@
       font-size: 1.1em;
       font-weight: bold;
       color: #333;
+    }
+
+    @keyframes surgir {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes tituloZoom {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeInput {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 768px) {
@@ -85,38 +119,35 @@
 </head>
 <body>
   <h1>Jogos da Tedi Games</h1>
-  
-  <!-- Barra de busca -->
-  <input type="text" id="searchInput" placeholder="Pesquisar jogo..." oninput="filtrarJogos()" />
+  <input type="text" id="searchInput" placeholder="Buscar jogo..." onkeyup="filtrarJogos()" />
 
-  <div class="jogos">
+  <div class="jogos" id="jogosContainer">
     <!-- Ninja Game -->
     <a class="jogo" href="https://gd.games/tedi_games_studios/ninja-game1" target="_blank">
-      <img src="ninja.jpg" alt="Ninja Game" />
+      <img src="ninja.jpg" alt="Ninja Game">
       <p>Ninja Game</p>
     </a>
 
     <!-- Incas The Game -->
     <a class="jogo" href="https://gd.games/tedi_games_studios/incas-the-game" target="_blank">
-      <img src="incas.jpg" alt="Incas The Game" />
+      <img src="incas.jpg" alt="Incas The Game">
       <p>Incas The Game</p>
     </a>
 
     <!-- Jumping Plane -->
     <a class="jogo" href="https://gd.games/tedi_games_studios/jumping-plane-" target="_blank">
-      <img src="plane.jpg" alt="Jumping Plane" />
+      <img src="plane.jpg" alt="Jumping Plane">
       <p>Jumping Plane</p>
     </a>
   </div>
 
   <script>
     function filtrarJogos() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const jogos = document.querySelectorAll(".jogo");
-
+      const termo = document.getElementById('searchInput').value.toLowerCase();
+      const jogos = document.querySelectorAll('.jogo');
       jogos.forEach(jogo => {
-        const nome = jogo.querySelector("p").textContent.toLowerCase();
-        jogo.style.display = nome.includes(input) ? "block" : "none";
+        const titulo = jogo.textContent.toLowerCase();
+        jogo.style.display = titulo.includes(termo) ? 'block' : 'none';
       });
     }
   </script>
