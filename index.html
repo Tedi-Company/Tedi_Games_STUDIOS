@@ -1,58 +1,173 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Botões com Som</title>
+  <meta charset="UTF-8" />
+  <title>Jogos da Tedi Games</title>
   <style>
+    * { box-sizing: border-box; }
+
     body {
-      background: #ffe066;
       font-family: Arial, sans-serif;
+      background-color: yellow;
+      margin: 0;
+      padding: 20px;
       text-align: center;
-      padding: 50px;
     }
 
     h1 {
+      color: #222;
+      font-size: 2.5em;
+      animation: tituloZoom 0.8s ease forwards;
+    }
+
+    #searchInput {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-top: 20px;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    .jogos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .jogo {
+      width: 220px;
+      background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .jogo:hover {
+      transform: scale(1.03);
+    }
+
+    .jogo img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .jogo p {
+      margin-top: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
       color: #333;
     }
 
-    .botao {
-      font-size: 18px;
-      padding: 15px 30px;
+    .btn-jogar {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-jogar:hover {
+      background-color: #1976D2;
+    }
+
+    .extra-button {
+      margin-top: 40px;
+      padding: 12px 20px;
+      background-color: #ffd11a;
       border: none;
       border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
-      margin: 20px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      color: #000;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
 
-    .botao:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    .extra-button:hover {
+      background-color: #e6c200;
     }
 
-    .azul { background-color: #4da6ff; color: white; }
-    .verde { background-color: #3adb76; color: white; }
-    .vermelho { background-color: #ff4d4d; color: white; }
-    .amarelo { background-color: #ffd11a; color: black; }
+    @media (max-width: 768px) {
+      .jogos {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .jogo {
+        width: 90%;
+      }
+    }
+
+    @keyframes tituloZoom {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 <body>
-  <h1>Botões com Efeitos Sonoros</h1>
+  <h1>Jogos da Tedi Games</h1>
+  <input type="text" id="searchInput" placeholder="Buscar jogo..." onkeyup="filtrarJogos()" />
 
-  <button class="botao azul" onclick="tocarSom('som_clique')">Clique</button>
-  <button class="botao verde" onclick="tocarSom('som_moeda')">Moeda</button>
-  <button class="botao vermelho" onclick="tocarSom('som_erro')">Erro</button>
-  <button class="botao amarelo" onclick="tocarSom('som_engracado')">Engraçado</button>
+  <!-- Áudios -->
+  <audio id="somClick" src="som_clique.mp3" preload="auto"></audio>
+  <audio id="somExtra" src="som_engracado.mp3" preload="auto"></audio>
 
-  <audio id="som_clique" src="som_clique.mp3"></audio>
-  <audio id="som_moeda" src="som_moeda.mp3"></audio>
-  <audio id="som_erro" src="som_erro.mp3"></audio>
-  <audio id="som_engracado" src="som_engracado.mp3"></audio>
+  <div class="jogos" id="jogosContainer">
+    <!-- Ninja Game -->
+    <div class="jogo">
+      <img src="ninja.jpg" alt="Ninja Game">
+      <p>Ninja Game</p>
+      <button class="btn-jogar" onclick="jogar('https://gd.games/tedi_games_studios/ninja-game1')">Jogar</button>
+    </div>
+
+    <!-- Incas The Game -->
+    <div class="jogo">
+      <img src="incas.jpg" alt="Incas The Game">
+      <p>Incas The Game</p>
+      <button class="btn-jogar" onclick="jogar('https://gd.games/tedi_games_studios/incas-the-game')">Jogar</button>
+    </div>
+
+    <!-- Jumping Plane -->
+    <div class="jogo">
+      <img src="plane.jpg" alt="Jumping Plane">
+      <p>Jumping Plane</p>
+      <button class="btn-jogar" onclick="jogar('https://gd.games/tedi_games_studios/jumping-plane-')">Jogar</button>
+    </div>
+  </div>
+
+  <!-- Botão extra com som engraçado -->
+  <button class="extra-button" onclick="tocarSomExtra()">Clique para algo engraçado!</button>
 
   <script>
-    function tocarSom(id) {
-      const som = document.getElementById(id);
-      som.currentTime = 0; // Reinicia se já estiver tocando
+    function filtrarJogos() {
+      const termo = document.getElementById('searchInput').value.toLowerCase();
+      const jogos = document.querySelectorAll('.jogo');
+      jogos.forEach(jogo => {
+        const titulo = jogo.textContent.toLowerCase();
+        jogo.style.display = titulo.includes(termo) ? 'block' : 'none';
+      });
+    }
+
+    function jogar(url) {
+      const som = document.getElementById('somClick');
+      som.currentTime = 0;
+      som.play();
+      setTimeout(() => {
+        window.open(url, '_blank');
+      }, 300);
+    }
+
+    function tocarSomExtra() {
+      const som = document.getElementById('somExtra');
+      som.currentTime = 0;
       som.play();
     }
   </script>
